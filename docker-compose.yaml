@@ -1,0 +1,16 @@
+version: "3.5"
+networks:
+  xxx:
+    name: "xxx"
+
+services:
+  foundation:
+    image: "foundationdb/foundationdb:${FDB_VERSION:-7.1.22}"
+    environment:
+      FDB_NETWORKING_MODE: container
+    entrypoint: ["/usr/bin/tini", "-g", "--", "bash", "-c", "/fdb-init.bash"]
+    volumes:
+      - ./fdb-init.bash:/fdb-init.bash
+      - ./run:/var/fdb/run:rw
+    networks:
+      - xxx
